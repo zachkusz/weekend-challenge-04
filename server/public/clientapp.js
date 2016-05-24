@@ -41,17 +41,24 @@ $(document).ready(function(){
   }
 
   function deleteTask(){
-    var deletedTask = $(this).parent().parent().data('id');
+    var check = confirm('Are you sure you want to delete this task? ' +
+      'You can also leave the task here as completed so you can look back ' +
+      'at all you\'ve got done!');
 
-    $.ajax ({
-        type: 'DELETE',
-        url: '/tasks/' + deletedTask,
-        success: function (data) {
-          getTasks();
-        }
-      });
+    if (check){
+      var deletedTask = $(this).parent().parent().data('id');
 
-    $(this).parent().parent().remove(); //removes it from dom on delete
+      $.ajax ({
+          type: 'DELETE',
+          url: '/tasks/' + deletedTask,
+          success: function (data) {
+            getTasks();
+          }
+        });
+
+      $(this).parent().parent().remove(); //removes it from dom on delete
+    }
+
   }
 
   function postTask(task) {
@@ -95,10 +102,10 @@ $(document).ready(function(){
       }
 
       var $el = $('<tr>' +
-        '<td>' + 'Task: ' + '</td>' +
-        '<td>' + row.description + '</td>' +
-        '<td>' + '<input type="checkbox" id="completed" name="completed"' + status + ' />' + '</td>' +
-        '<td>' + '<button class="delete">Delete</button>' + '</td>' +
+        '<td class ="static">' + 'Task:   ' + '</td>' +
+        '<td class="description">' + row.description + '</td>' +
+        '<td class="check">' + '<input type="checkbox" id="completed" name="completed"' + status + ' />' + '</td>' +
+        '<td class="static">' + '<button class="delete">Delete</button>' + '</td>' +
         '</tr>');
         $el.data('id', row.id);
         $el.data('complete', row.complete);

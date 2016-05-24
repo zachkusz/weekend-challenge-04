@@ -12,17 +12,17 @@ router.delete('/:id', function(req, res) { //could copy from delete to unique ge
     }
 
     client.query('DELETE FROM tasks ' +
-                  'WHERE id = $1 ' ,
-                  [id],
-                  function(err, result) {
-                    done();
+                'WHERE id = $1 ' ,
+                [id],
+                function(err, result) {
+                  done();
 
-                    if (err) {
-                      res.sendStatus(500);
-                      return;
-                    }
-                    res.sendStatus(200);
+                  if (err) {
+                    res.sendStatus(500);
+                    return;
                   }
+                  res.sendStatus(200);
+                }
     );
   });
 });
@@ -60,7 +60,7 @@ router.get('/', function (req, res) {
       res.sendStatus(500);
     }
 
-    client.query('SELECT * FROM tasks ORDER BY complete DESC',
+    client.query('SELECT * FROM tasks ORDER BY id DESC',
       function(err, result) {
       done();
 
